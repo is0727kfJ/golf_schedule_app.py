@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import datetime
@@ -15,7 +14,8 @@ st.header("📋 スケジュール設定")
 
 col1, col2, col3 = st.columns(3)
 with col1:
-    start_time = st.time_input("⏱️ スタート時刻", datetime.time(9, 0))
+    time_options = [datetime.time(h, m) for h in range(24) for m in range(0, 60, 1)]
+    start_time = st.selectbox("⏱️ スタート時刻", time_options, index=time_options.index(datetime.time(9, 0)))
     start_interval = st.number_input("⏳ スタート間隔（分）", min_value=1, max_value=60, value=8)
 with col2:
     hole_duration = st.number_input("⛳ ホール所要時間（分）", min_value=1, max_value=60, value=9)
@@ -78,3 +78,4 @@ if st.button("🚀 スケジュールを計算") or auto_calculate:
                 st.write("保存されたスケジュールはありません。")
     except Exception as e:
         st.error(f"エラーが発生しました: {e}")
+
